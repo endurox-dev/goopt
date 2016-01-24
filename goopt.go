@@ -419,11 +419,18 @@ func Parse(extraopts func() []string) bool {
 			skip--
 			continue
 		}
+		
 		if a == "--" {
-			Args = cat(Args, os.Args[i+1:])
+//			Args = cat(Args, os.Args[i+1:])
 			earlyEnd = true
-			break
+	//		break
 		}
+		
+		//For Enduro, we only parse after the end...
+		if (!earlyEnd) {
+			continue;
+		}
+
 		if len(a) > 1 && a[0] == '-' && a[1] != '-' {
 			for j, s := range a[1:] {
 				foundone := false
@@ -500,7 +507,8 @@ func Parse(extraopts func() []string) bool {
 		}
 	}
 	
-	return earlyEnd
+	//return earlyEnd
+	return false
 }
 
 func match(x string, allflags []string) string {
